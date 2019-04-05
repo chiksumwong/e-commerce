@@ -1,4 +1,5 @@
 # e-commerce-backend
+https://travis-ci.com/chiksumwong/e-commerce-backend.svg?branch=master
 
 ```sh
 $ npm install
