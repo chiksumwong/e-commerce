@@ -1,0 +1,4 @@
+{
+    "MONGODB_CONNECTION_STRING":"mongodb+srv://dbUser:abc123456@cluster0-llvvd.azure.mongodb.net/test?retryWrites=true",
+    "LOCAL_MONGODB_CONNECTION_STRING":"mongodb://localhost:27017/web_api"
+}

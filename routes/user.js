@@ -1,5 +1,5 @@
 // Import Controller Object
-const userController = require('./../controllers/user.ctrl')
+const userController = require('./../controllers/user.controller')
 
 module.exports = (router) => {
     /**

@@ -1,0 +1,25 @@
+{
+  "name": "e-commerce-backend",
+  "version": "1.0.0",
+  "description": "e-commerce website backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiksumwong/e-commerce-backend.git"
+  },
+  "author": "Wong Chik Sum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chiksumwong/e-commerce-backend/issues"
+  },
+  "homepage": "https://github.com/chiksumwong/e-commerce-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.21"
+  }
+}
