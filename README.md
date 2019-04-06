@@ -1,5 +1,5 @@
 # e-commerce-backend
-https://travis-ci.com/chiksumwong/e-commerce-backend.svg?branch=master
+[![Build Status](https://travis-ci.com/chiksumwong/e-commerce-backend.svg?branch=registration-login-logout-function)](https://travis-ci.com/chiksumwong/e-commerce-backend)
 
 ```sh
 $ npm install

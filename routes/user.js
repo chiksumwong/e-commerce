@@ -10,5 +10,5 @@ module.exports = (router) => {
     /**
      * adds a user
      */
-    router.route('/user').post(userController.addUser)
+    router.route('/registration').post(userController.addUser)
 }
