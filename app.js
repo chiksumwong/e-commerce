@@ -1,19 +1,19 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const session = require('express-session')
 const routes = require('./routes/index')
-
+const errorHandler = require('./error_handler')
+const jwt = require('./jwt')
 const app = express();
+
 app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(session({
-  secret: 'work hard',
-  resave: true,
-  saveUninitialized: false
-}));
+app.use(errorHandler);
+
+app.use(jwt());
 
 // api urls
 const router = express.Router();

@@ -1,68 +1,54 @@
-const User = require('./../models/user.model.js')
+const config = require('./../config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-async function authenticate({ username, password }) {
-    const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
-        const token = jwt.sign({ sub: user.id }, config.secret);
-        return {
-            ...userWithoutHash,
-            token
-        };
+const User = require('./../models/user.model')
+
+module.exports = {
+    getById,
+    addUser,
+    login
+};
+
+async function login(req, res, next) {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    const user = await User.findOne({ email:email });
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+        const token = jwt.sign({ user_id: user.id }, config.JWT_SECRET_KEY);
+        return res.status(200).json({ token: token });
     }
 }
 
-module.exports = {
+async function addUser(req, res, next) {
+    let username = req.body.username;
+    let password = req.body.password;
+    let email = req.body.email;
 
-    addUser: (req, res, next) => {
-
-        let user = new User({
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email
-        });
-
-        user.save(function (err, res) {
-            if (err) {
-                console.log("\nError:" + err);
-            }
-            else {
-                console.log("\nRes:" + res);
-            }
-            next();
-        });
-    },
-
-    login: (req, res, next) => {
-        User.findById(req.params.id).then
-        ((err, user)=> {
-            if (err)
-                res.send(err)
-            else if (!user)
-                res.send(404)
-            else
-                res.send(user)
-            next()            
-        })
-    },
-
-    logout: (req, res, next) => {
-        User.findById(req.params.id).then
-        ((err, user)=> {
-            if (err)
-                res.send(err)
-            else if (!user)
-                res.send(404)
-            else
-                res.send(user)
-            next()            
-        })
-    },
-
-    getById: (id) => {
-        return await User.findById(id).select('-hash');
+    // hash password
+    if (password) {
+        password = bcrypt.hashSync(password, 10);
     }
 
+    let user = new User({
+        username: username,
+        password: password,
+        email: email
+    });
+
+    await user.save(function (err, res) {
+        if (err) {
+            console.log("\nError:" + err);
+        }
+        else {
+            console.log("\nRes:" + res);
+        }
+        next();
+    });
+}
+
+async function getById(req, res, next) {
+    return await User.findById(req.body.id);
 }
