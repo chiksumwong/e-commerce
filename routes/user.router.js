@@ -1,11 +1,7 @@
 const userController = require('./../controllers/user.controller')
 
 module.exports = (router) => {
-    router.route('/user/:id').get(userController.getById);
-
-    router.route('/registration').post(userController.addUser);
-
+    router.route('/register').post(userController.register);
     router.route('/login').post(userController.login);
-
-    // router.route('/logout').post(userController.logout);
+    router.route('/user/:id').get(userController.getById);
 }

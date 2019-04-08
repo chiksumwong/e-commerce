@@ -8,11 +8,10 @@ $ npm test
 ```
 
 ### Account APIs
-| APIs         | Method | Urls                                      |
-| ------------ | ------ | ----------------------------------------- |
-| Registration | POST   | http://localhost:3000/api/v1/registration |
-| Login        | POST   | http://localhost:3000/api/v1/login        |
-| Logout       | POST   | http://localhost:3000/api/v1/logout       |
+| APIs     | Method | Urls                                  |
+| -------- | ------ | ------------------------------------- |
+| Register | POST   | http://localhost:3000/api/v1/register |
+| Login    | POST   | http://localhost:3000/api/v1/login    |
 
 ### Product APIs
 | APIs             | Method | Urls                                               |
