@@ -9,7 +9,7 @@ const DB_URL = config.MONGODB_CONNECTION_STRING;
 mongoose.connect(DB_URL);
 
 mongoose.connection.on('connected', function () {    
-    console.log('\nMongoose connection open to ' + DB_URL);  
+    console.log('\nMongoose connection open');  
 });    
 
 mongoose.connection.on('error',function (err) {    
