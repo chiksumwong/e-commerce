@@ -4,14 +4,14 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/index')
 const errorHandler = require('./error_handler')
 const jwt = require('./jwt')
+
 const app = express();
 
-app.use(cors());
+require('./db');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(errorHandler);
+app.use(cors());
 
 app.use(jwt());
 
@@ -19,6 +19,9 @@ app.use(jwt());
 const router = express.Router();
 routes(router);
 app.use('/api/v1', router);
+
+// global error handler
+app.use(errorHandler);
 
 // start server
 const port = process.env.PORT || 3000;

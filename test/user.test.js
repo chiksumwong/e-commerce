@@ -1,4 +1,5 @@
-var server = require("../app");
+require("../app");
+
 const chai = require('chai');
 const request = require('supertest');
 

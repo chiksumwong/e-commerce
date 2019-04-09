@@ -52,5 +52,5 @@ async function register(req, res, next) {
 
 async function getById(req, res, next) {
     const user = await User.findById(req.params.id);
-    return res.status(200).json({ username: user.username, email: user.email });
+    return res.status(200).json(user);
 }
