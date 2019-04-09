@@ -9,19 +9,20 @@ const app = express();
 
 require('./db');
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(cors());
 
 app.use(jwt());
+
+// global error handler
+app.use(errorHandler);
 
 // api urls
 const router = express.Router();
 routes(router);
 app.use('/api/v1', router);
-
-// global error handler
-app.use(errorHandler);
 
 // start server
 const port = process.env.PORT || 3000;
