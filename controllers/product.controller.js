@@ -40,9 +40,9 @@ async function addProduct(req, res, next) {
 }
 
 async function updateProduct(req, res, next) {
-    await Product.findByIdAndUpdate(req.params.id, req.body, (err, product) => {
+    await Product.findByIdAndUpdate(req.params.id, req.body, (err, response) => {
         if (err) return res.status(500).json({error_message:err})
-        return res.status(200).json(product);
+        return res.status(200).json(response);
     });
 }
 

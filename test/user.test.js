@@ -38,8 +38,8 @@ describe('User', () => {
         expect(res.body.username).to.equal('Boby');
         expect(res.body).to.have.property('email');
         expect(res.body.email).to.equal('boby@example.com');
-        done();
       });
+      done();
   });
 
 });
