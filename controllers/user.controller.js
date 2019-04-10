@@ -10,6 +10,23 @@ module.exports = {
     getById
 };
 
+async function register(req, res, next) {
+    let password = req.body.password;
+    if (password) {
+        password = bcrypt.hashSync(password, 10);
+    }
+    let user_info = {
+        username: req.body.username,
+        password: password,
+        email: req.body.email
+    }
+    const user = new User(user_info);
+    await user.save((err, user) => {
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
+    });
+}
+
 async function login(req, res, next) {
     let email = req.body.email;
     let password = req.body.password;
@@ -18,26 +35,9 @@ async function login(req, res, next) {
 
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign({ sub: user.id }, config.JWT_SECRET_KEY);
-        return res.status(200).json({ user_id:user.id, token: token });
+        return res.status(200).json({ user_id:user.id, user_name:user.username, token: token });
     }
     next();
-}
-
-async function register(req, res, next) {
-    let hash_password;
-    if (req.body.password) {
-        hash_password = bcrypt.hashSync(password, 10);
-    }
-    let user = {
-        username: req.body.username,
-        password: hash_password,
-        email: req.body.email
-    }
-    const user = new User(user);
-    await user.save((err, user) => {
-        if (err) return res.status(500).json({error_message:err});
-        return res.status(200).json(user);
-    });
 }
 
 async function getById(req, res, next) {
