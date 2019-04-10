@@ -1,6 +1,6 @@
 const expressJwt = require('express-jwt'); // For verifies token
-const config = require('./config');
-const User = require('./models/user.model')
+const config = require('./../config');
+const User = require('../models/user.model')
 
 module.exports = jwt;
 

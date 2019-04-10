@@ -2,13 +2,31 @@ const config = require('./../config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const User = require('./../models/user.model')
+const User = require('./../models/user.model');
 
 module.exports = {
     register,
     login,
-    getById
+    getById,
+    updateProductListById
 };
+
+async function register(req, res, next) {
+    let password = req.body.password;
+    if (password) {
+        password = bcrypt.hashSync(password, 10);
+    }
+    let user_info = {
+        username: req.body.username,
+        password: password,
+        email: req.body.email
+    };
+    const user = new User(user_info);
+    await user.save((err, user) => {
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
+    });
+}
 
 async function login(req, res, next) {
     let email = req.body.email;
@@ -18,39 +36,22 @@ async function login(req, res, next) {
 
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign({ sub: user.id }, config.JWT_SECRET_KEY);
-        return res.status(200).json({ user_id:user.id, token: token });
+        return res.status(200).json({ user_id:user.id, user_name:user.username, token: token });
     }
     next();
 }
 
-async function register(req, res, next) {
-    let username = req.body.username;
-    let password = req.body.password;
-    let email = req.body.email;
-
-    // hash password
-    if (password) {
-        password = bcrypt.hashSync(password, 10);
-    }
-
-    let user = new User({
-        username: username,
-        password: password,
-        email: email
-    });
-
-    await user.save(function (err, res) {
-        if (err) {
-            console.log("\nError:" + err);
-        }
-        else {
-            console.log("\nRes:" + res);
-        }
-        next();
+async function getById(req, res, next) {
+    await User.findById(req.params.id, (err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
     });
 }
 
-async function getById(req, res, next) {
-    const user = await User.findById(req.params.id);
-    return res.status(200).json({ username: user.username, email: user.email });
+async function updateProductListById(user_id, product) {
+    const user = await User.findById(user_id, (err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    user.products.push(product);
+    return await user.save();
 }

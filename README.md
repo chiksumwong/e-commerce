@@ -1,11 +1,12 @@
-# e-commerce-backend
+# e-commerce-platform-backend
 [![Build Status](https://travis-ci.com/chiksumwong/e-commerce-backend.svg?token=zvXMXvZ8HnB2PtvDsBvS&branch=master)](https://travis-ci.com/chiksumwong/e-commerce-backend)
 
 ```sh
 $ npm install
-$ npm start
 $ npm test
+$ npm start
 ```
+## APIs Design
 
 ### Account APIs
 | APIs     | Method | Urls                                  |
@@ -32,3 +33,10 @@ $ npm test
 | Payment                                       | POST   | http://localhost:3000/api/v1/payment         |
 | View Shopping History / Order List with state | GET    | http://localhost:3000/api/v1/order/:user_id  |
 | Update Order State                            | PUT    | http://localhost:3000/api/v1/order/:order_id |
+
+## Database Design
+<p>
+<kbd>
+<img src='public/img/database_design.png' alt='database_design'>
+</kbd>
+</p>
