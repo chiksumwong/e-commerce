@@ -33,7 +33,7 @@ async function getByName(req, res, next) {
 
 async function addProduct(req, res, next) {
     const product = new Product(req.body);
-    await product.save(err => {
+    await product.save((err, product) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(product);
     });

@@ -24,33 +24,25 @@ async function login(req, res, next) {
 }
 
 async function register(req, res, next) {
-    let username = req.body.username;
-    let password = req.body.password;
-    let email = req.body.email;
-
-    // hash password
-    if (password) {
-        password = bcrypt.hashSync(password, 10);
+    let hash_password;
+    if (req.body.password) {
+        hash_password = bcrypt.hashSync(password, 10);
     }
-
-    let user = new User({
-        username: username,
-        password: password,
-        email: email
-    });
-
-    await user.save(function (err, res) {
-        if (err) {
-            console.log("\nError:" + err);
-        }
-        else {
-            console.log("\nRes:" + res);
-        }
-        next();
+    let user = {
+        username: req.body.username,
+        password: hash_password,
+        email: req.body.email
+    }
+    const user = new User(user);
+    await user.save((err, user) => {
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
     });
 }
 
 async function getById(req, res, next) {
-    const user = await User.findById(req.params.id);
-    return res.status(200).json(user);
+    await User.findById(req.params.id, (err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
+    });
 }

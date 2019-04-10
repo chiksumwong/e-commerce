@@ -2,12 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index')
-const errorHandler = require('./error_handler')
-const jwt = require('./jwt')
+const errorHandler = require('./helper/error_handler')
+const jwt = require('./helper/jwt')
 
 const app = express();
 
-require('./db');
+require('./helper/db');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

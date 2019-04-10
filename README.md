@@ -32,3 +32,10 @@ $ npm test
 | Payment                                       | POST   | http://localhost:3000/api/v1/payment         |
 | View Shopping History / Order List with state | GET    | http://localhost:3000/api/v1/order/:user_id  |
 | Update Order State                            | PUT    | http://localhost:3000/api/v1/order/:order_id |
+
+## Database Design
+<p>
+<kbd>
+<img src='public/img/database.png' alt='database'>
+</kbd>
+</p>
