@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
         password: { type: String, required: true },
         email: { type: String, unique: true, required: true},
         products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
-        cart:[{product_id:{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }, quantity: Number, is_active: Boolean}],
+        cart:[{product_id:String, quantity: Number, is_active: Boolean}],
         timestamp: { type: Date, default: Date.now }
 });
 

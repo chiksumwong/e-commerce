@@ -8,7 +8,10 @@ module.exports = {
     register,
     login,
     getById,
-    updateProductListById
+    deleteUser,
+    updateProductListById,
+    addProductToCart,
+    updateProductInCart
 };
 
 async function register(req, res, next) {
@@ -54,4 +57,39 @@ async function updateProductListById(user_id, product) {
     });
     user.products.push(product);
     return await user.save();
+}
+
+async function deleteUser(req, res, next) {
+    await User.findByIdAndRemove(req.params.id, err => {
+        if (err) return res.status(500).json({error_message:err});
+        const response = {
+            message: "Successfully deleted",
+        };
+        return res.status(200).json(response);
+    });
+}
+
+async function addProductToCart(req, res, next) {
+    const user_id = req.body.user_id;
+    
+    const product_info = {
+        product_id: req.body.product_id,
+        quantity: req.body.quantity,
+        is_active: req.body.is_active
+    }
+
+    await User.findByIdAndUpdate(user_id,{ $push: {"cart": product_info}},{ upsert: true, new: true }, (err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
+    });
+}
+
+async function updateProductInCart(req, res, next) {
+    const user_id = req.params.user_id;
+    const cart_info = req.body.cart;
+
+    await User.findByIdAndUpdate(user_id, { $set:{"cart":cart_info}},(err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(user);
+    });
 }

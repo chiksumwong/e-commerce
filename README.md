@@ -15,6 +15,7 @@ $ npm start
 | Login             | POST   | http://localhost:3000/api/v1/login         |
 | Get User By ID    | GET    | http://localhost:3000/api/v1/user/:user_id |
 | Update User By ID | PUT    | http://localhost:3000/api/v1/user/:user_id |
+| Delete User By ID | Delete | http://localhost:3000/api/v1/user/:user_id |
 
 ### Product APIs
 | APIs              | Method | Urls                                             |
@@ -26,11 +27,10 @@ $ npm start
 | Delete Product    | DELETE | http://localhost:3000/api/v1/product/:product_id |
 
 ### Shopping Cart APIs
-| APIs                            | Method | Urls                                          |
-| ------------------------------- | ------ | --------------------------------------------- |
-| Add Product to Shopping Cart    | POST   | http://localhost:3000/api/v1/cart             |
-| Update Product in Shopping Cart | PUT    | http://localhost:3000/api/v1/cart/:product_id |
-| Delete Product in Shopping Cart | DELETE | http://localhost:3000/api/v1/cart/:product_id |
+| APIs                                     | Method | Urls                                       |
+| ---------------------------------------- | ------ | ------------------------------------------ |
+| Add Product to Shopping Cart             | POST   | http://localhost:3000/api/v1/cart          |
+| Update / Delete Product in Shopping Cart | PUT    | http://localhost:3000/api/v1/cart/:user_id |
 
 ### Order APIs
 | APIs                                          | Method | Urls                                         |
