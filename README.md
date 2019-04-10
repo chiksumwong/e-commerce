@@ -1,11 +1,12 @@
-# e-commerce-backend
+# e-commerce-platform-backend
 [![Build Status](https://travis-ci.com/chiksumwong/e-commerce-backend.svg?token=zvXMXvZ8HnB2PtvDsBvS&branch=master)](https://travis-ci.com/chiksumwong/e-commerce-backend)
 
 ```sh
 $ npm install
-$ npm start
 $ npm test
+$ npm start
 ```
+## APIs Design
 
 ### Account APIs
 | APIs     | Method | Urls                                  |
@@ -36,6 +37,6 @@ $ npm test
 ## Database Design
 <p>
 <kbd>
-<img src='public/img/database.png' alt='database'>
+<img src='public/img/database_design.png' alt='database_design'>
 </kbd>
 </p>

@@ -2,12 +2,13 @@ const config = require('./../config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const User = require('./../models/user.model')
+const User = require('./../models/user.model');
 
 module.exports = {
     register,
     login,
-    getById
+    getById,
+    updateProductListById
 };
 
 async function register(req, res, next) {
@@ -19,7 +20,7 @@ async function register(req, res, next) {
         username: req.body.username,
         password: password,
         email: req.body.email
-    }
+    };
     const user = new User(user_info);
     await user.save((err, user) => {
         if (err) return res.status(500).json({error_message:err});
@@ -45,4 +46,12 @@ async function getById(req, res, next) {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(user);
     });
+}
+
+async function updateProductListById(user_id, product) {
+    const user = await User.findById(user_id, (err, user) =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    user.products.push(product);
+    return await user.save();
 }

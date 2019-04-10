@@ -1,4 +1,5 @@
-const Product = require('./../models/product.model')
+const Product = require('./../models/product.model');
+const userController = require('./user.controller');
 
 module.exports = {
     getAll,
@@ -35,6 +36,8 @@ async function addProduct(req, res, next) {
     const product = new Product(req.body);
     await product.save((err, product) => {
         if (err) return res.status(500).json({error_message:err});
+        // Find user by id then update product list
+        userController.updateProductListById(req.body.seller, product);
         return res.status(200).json(product);
     });
 }
