@@ -32,11 +32,10 @@ $ npm start
 | Update Product in Shopping Cart | PUT    | http://localhost:3000/api/v1/cart/:user_id |
 
 ### Order APIs
-| APIs                       | Method | Urls                                         |
-| -------------------------- | ------ | -------------------------------------------- |
-| Payment                    | POST   | http://localhost:3000/api/v1/payment         |
-| View Order List with state | GET    | http://localhost:3000/api/v1/order/:user_id  |
-| Update Order State         | PUT    | http://localhost:3000/api/v1/order/:order_id |
+| APIs         | Method | Urls                                         |
+| ------------ | ------ | -------------------------------------------- |
+| Create order | POST   | http://localhost:3000/api/v1/order           |
+| Update Order | PUT    | http://localhost:3000/api/v1/order/:order_id |
 
 ## Database Design
 <p>
