@@ -16,7 +16,7 @@ describe('User', () => {
     api.post('/login')
       .set('Accept', 'application/json')
       .send({
-        email: 'boby@example.com',
+        email: 'sam@example.com',
         password: '1234'
       })
       .expect(200)
@@ -38,9 +38,9 @@ describe('User', () => {
           if (err) return done(err);
           res.status.should.be.equal(200);
           expect(res.body).to.have.property('username');
-          expect(res.body.username).to.equal('Boby');
+          expect(res.body.username).to.equal('Sam');
           expect(res.body).to.have.property('email');
-          expect(res.body.email).to.equal('boby@example.com');
+          expect(res.body.email).to.equal('sam@example.com');
         });
       done();
     });
