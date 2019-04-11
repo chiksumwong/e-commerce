@@ -9,9 +9,9 @@ module.exports = {
     login,
     getById,
     deleteUser,
-    updateProductListById,
     addProductToCart,
-    updateProductInCart
+    updateProductInCart,
+    updateProductListById
 };
 
 async function register(req, res, next) {
