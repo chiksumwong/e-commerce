@@ -52,7 +52,7 @@ async function getById(req, res, next) {
 }
 
 async function updateProductListById(user_id, product) {
-    const user = await User.findById(user_id, (err, user) =>{
+    const user = await User.findById(user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
     user.products.push(product);
@@ -71,25 +71,22 @@ async function deleteUser(req, res, next) {
 
 async function addProductToCart(req, res, next) {
     const user_id = req.body.user_id;
-    
     const product_info = {
         product_id: req.body.product_id,
         quantity: req.body.quantity,
         is_active: req.body.is_active
     }
-
-    await User.findByIdAndUpdate(user_id,{ $push: {"cart": product_info}},{ upsert: true, new: true }, (err, user) =>{
+    const user = await User.findById(user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
-        return res.status(200).json(user);
     });
+    user.cart.push(product_info);
+   await user.save();
+   return res.status(200).json(user);
 }
 
 async function updateProductInCart(req, res, next) {
-    const user_id = req.params.user_id;
-    const cart_info = req.body.cart;
-
-    await User.findByIdAndUpdate(user_id, { $set:{"cart":cart_info}},(err, user) =>{
+    const user = await User.findByIdAndUpdate(req.params.id, { $set:req.body},(err, result) =>{
         if (err) return res.status(500).json({error_message:err});
-        return res.status(200).json(user);
     });
+    return res.status(200).json(user);
 }
