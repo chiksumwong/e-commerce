@@ -11,7 +11,9 @@ module.exports = {
     deleteUser,
     addProductToCart,
     updateProductInCart,
-    updateProductListById
+    updateProductListById,
+    updateOrderListById,
+    cleanCart
 };
 
 async function register(req, res, next) {
@@ -51,14 +53,6 @@ async function getById(req, res, next) {
     });
 }
 
-async function updateProductListById(user_id, product) {
-    const user = await User.findById(user_id, err =>{
-        if (err) return res.status(500).json({error_message:err});
-    });
-    user.products.push(product);
-    return await user.save();
-}
-
 async function deleteUser(req, res, next) {
     await User.findByIdAndRemove(req.params.id, err => {
         if (err) return res.status(500).json({error_message:err});
@@ -85,8 +79,39 @@ async function addProductToCart(req, res, next) {
 }
 
 async function updateProductInCart(req, res, next) {
-    const user = await User.findByIdAndUpdate(req.params.id, { $set:req.body},(err, result) =>{
+    const user = await User.findByIdAndUpdate(req.params.id, { $set:req.body}, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
     return res.status(200).json(user);
+}
+
+async function updateProductListById(user_id, product) {
+    const user = await User.findById(user_id, err =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    user.products.push(product);
+    return await user.save();
+}
+
+async function updateOrderListById(seller_user_id, buyer_user_id, order) {
+    const seller = await User.findById(seller_user_id, err =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    seller.orders.push(order);
+    await seller.save();
+
+    const buyer = await User.findById(buyer_user_id, err =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    buyer.orders.push(order);
+    await buyer.save();
+
+    return res.status(200).json({message:"done"});
+}
+
+async function cleanCart(user_id) {
+    const user = await User.findByIdAndUpdate(user_id, { $set:{cart:[]}}, err =>{
+        if (err) return res.status(500).json({error_message:err});
+    });
+    return user;
 }

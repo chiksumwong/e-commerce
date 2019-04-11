@@ -1,5 +1,6 @@
 require("../app");
-const Product = require('./../models/product.model')
+const Product = require('./../models/product.model');
+const User = require('./../models/user.model');
 
 const chai = require('chai');
 const request = require('supertest');
@@ -32,7 +33,7 @@ const updated_product_info = {
   }]
 };
 
-const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Y2FiMWQ4ZTk1YWU3ZTQ1YTBhZjc5NTciLCJpYXQiOjE1NTQ3MjQ1MDF9.PbTEg84myv-3G2VtB1gXpGqcZjKACg-I0AUMKFKMVlI';
+const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Y2FlOWRmMzFlMTBkZjI4OTQ0MDBiODMiLCJpYXQiOjE1NTQ5NDc1ODd9.vnjBjM3mu7oF6XqKt7nXlm31yyc5jR-W5cZv6ovhWoI';
 
 describe('Product', () => {
 
