@@ -39,7 +39,7 @@ describe('Product', () => {
 
   /* Before Each Testing: Empty the Database */
   beforeEach((done) => {
-    Product.remove({}, (err) => {
+    Product.deleteMany({}, (err) => {
       if (err) return done(err);
       done();
     });
@@ -47,7 +47,7 @@ describe('Product', () => {
 
   /* After Each Testing: Empty the Database */
   afterEach((done) => {
-    Product.remove({}, (err) => {
+    Product.deleteMany({}, (err) => {
       if (err) return done(err);
       done();
     });

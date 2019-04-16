@@ -6,11 +6,12 @@ module.exports = {
     getById,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    addProductToCart
 };
 
 async function getAll(req, res, next) {
-    await Product.find((err, product) => {
+    await Product.find({},(err, product) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(product);
     });
@@ -26,10 +27,8 @@ async function getById(req, res, next) {
 
 async function addProduct(req, res, next) {
     const product = new Product(req.body);
-    await product.save((err, product) => {
+    await product.save(err => {
         if (err) return res.status(500).json({error_message:err});
-        // Find user by id then update product list
-        userController.updateProductListById(req.body.seller, product);
         return res.status(200).json(product);
     });
 }
@@ -48,5 +47,14 @@ async function deleteProduct(req, res, next) {
             message: "Successfully deleted",
         };
         return res.status(200).json(response);
+    });
+}
+
+async function addProductToCart(req, res, next) {
+    await Product.findById(req.params.id, (err, product) =>{
+        if (err) return res.status(500).json({error_message:err});
+        // Find user by id then update product list
+        userController.updateProductListById(req.body.seller, product);
+        return res.status(200).json(product);
     });
 }
