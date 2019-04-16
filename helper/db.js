@@ -1,12 +1,10 @@
-const config = require('./../config');
+const config = require('./../config').get(process.env.NODE_ENV);
 
 const mongoose = require('mongoose');
 
+mongoose.connect(config.DATABASE, {useNewUrlParser: true});
 
-// const DB_URL = config.LOCAL_MONGODB_CONNECTION_STRING;
-const DB_URL = config.MONGODB_CONNECTION_STRING;
-
-mongoose.connect(DB_URL);
+mongoose.set('useCreateIndex',true);
 
 mongoose.connection.on('connected', function () {    
     console.log('\nMongoose connection open');  

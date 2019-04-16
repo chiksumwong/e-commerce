@@ -1,4 +1,4 @@
-const config = require('./../config');
+const config = require('./../config').get(process.env.NODE_ENV);
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
