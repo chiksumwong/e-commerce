@@ -67,13 +67,16 @@ async function addProductToCart(req, res, next) {
     const user_id = req.body.user_id;
     const product_info = {
         product_id: req.body.product_id,
+        product_name: req.body.product_name,
+        product_image: req.body.product_image,
+        selling_price: req.body.selling_price,
         quantity: req.body.quantity,
         is_active: req.body.is_active
     }
     const user = await User.findById(user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
-    user.cart.push(product_info);
+    user.carts.push(product_info);
    await user.save();
    return res.status(200).json(user);
 }
@@ -110,7 +113,7 @@ async function updateOrderListById(seller_user_id, buyer_user_id, order) {
 }
 
 async function cleanCart(user_id) {
-    const user = await User.findByIdAndUpdate(user_id, { $set:{cart:[]}}, err =>{
+    const user = await User.findByIdAndUpdate(user_id, { $set:{carts:[]}}, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
     return user;
