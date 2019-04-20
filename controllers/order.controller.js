@@ -3,7 +3,8 @@ const userController = require('./user.controller');
 
 module.exports = {
     addOrder,
-    updateOrder
+    updateOrder,
+    getOrderByUserId
 };
 
 async function addOrder(req, res, next) {
@@ -24,6 +25,13 @@ async function addOrder(req, res, next) {
 
 async function updateOrder(req, res, next) {
     await Order.findByIdAndUpdate(req.params.id, {$set:req.body}, (err, order) => {
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(order);
+    });
+}
+
+async function getOrderByUserId(req, res, next){
+    await Order.find({buyer:req.params.user_id},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(order);
     });

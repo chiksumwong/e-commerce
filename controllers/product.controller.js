@@ -7,6 +7,7 @@ module.exports = {
     addProduct,
     updateProduct,
     deleteProduct,
+    getProductByUserId
 };
 
 async function getAll(req, res, next) {
@@ -14,7 +15,6 @@ async function getAll(req, res, next) {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(product);
     });
-    
 }
 
 async function getById(req, res, next) {
@@ -47,5 +47,12 @@ async function deleteProduct(req, res, next) {
             message: "Successfully deleted",
         };
         return res.status(200).json(response);
+    });
+}
+
+async function getProductByUserId(req, res, next){
+    await Product.find({seller:req.params.user_id},(err, product) => {
+        if (err) return res.status(500).json({error_message:err});
+        return res.status(200).json(product);
     });
 }
