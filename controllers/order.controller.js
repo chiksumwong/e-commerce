@@ -10,9 +10,14 @@ async function addOrder(req, res, next) {
     const order = new Order(req.body);
     await order.save((err, order) => {
         if (err) return res.status(500).json({error_message:err});
+
         // Find seller and buyer by id then update order list
-        userController.updateOrderListById(req.body.seller, req.body.buyer, order);
-        userController.cleanCart(req.body.buyer);
+        let products = req.body.products
+        products.forEach(product => {
+            userController.updateOrderListById(product.seller, req.body.buyer, order);
+        });
+
+
         return res.status(200).json(order);
     });
 }

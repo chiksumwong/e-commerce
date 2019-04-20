@@ -54,7 +54,7 @@ async function addProductToCart(req, res, next) {
     await Product.findById(req.params.id, (err, product) =>{
         if (err) return res.status(500).json({error_message:err});
         // Find user by id then update product list
-        userController.updateProductListById(req.body.seller, product);
+        // userController.updateProductListById(req.body.seller, product);
         return res.status(200).json(product);
     });
 }

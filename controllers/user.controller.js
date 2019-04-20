@@ -12,8 +12,7 @@ module.exports = {
     addProductToCart,
     updateProductInCart,
     updateProductListById,
-    updateOrderListById,
-    cleanCart
+    updateOrderListById
 };
 
 async function register(req, res, next) {
@@ -70,6 +69,7 @@ async function addProductToCart(req, res, next) {
         product_name: req.body.product_name,
         product_image: req.body.product_image,
         selling_price: req.body.selling_price,
+        seller: req.body.seller,
         quantity: req.body.quantity,
         is_active: req.body.is_active
     }
@@ -110,11 +110,4 @@ async function updateOrderListById(seller_user_id, buyer_user_id, order) {
     await buyer.save();
 
     return res.status(200).json({message:"done"});
-}
-
-async function cleanCart(user_id) {
-    const user = await User.findByIdAndUpdate(user_id, { $set:{carts:[]}}, err =>{
-        if (err) return res.status(500).json({error_message:err});
-    });
-    return user;
 }
