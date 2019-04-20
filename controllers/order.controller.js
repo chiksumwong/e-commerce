@@ -47,10 +47,10 @@ async function getOrderBySellerId(req, res, next){
         order.forEach(e => {
 
             let obj = {};
+            obj.order_id = e._id;
             obj.addressee = e.addressee;
             obj.address = e.address;
             obj.phone_number = e.phone_number;
-            obj.order_states = e.order_states;
             obj.products = []
 
             let products = e.products;
@@ -62,6 +62,7 @@ async function getOrderBySellerId(req, res, next){
                     product_obj.product_id = product.product_id;
                     product_obj.product_name = product.product_name;
                     product_obj.quantity = product.quantity;
+                    product_obj.order_states = product.order_states
                     obj.products.push(product_obj);
 
                 }
