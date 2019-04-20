@@ -4,7 +4,8 @@ const userController = require('./user.controller');
 module.exports = {
     addOrder,
     updateOrder,
-    getOrderByUserId
+    getOrderByUserId,
+    getOrderBySellerId
 };
 
 async function addOrder(req, res, next) {
@@ -34,5 +35,43 @@ async function getOrderByUserId(req, res, next){
     await Order.find({buyer:req.params.user_id},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(order);
+    });
+}
+
+async function getOrderBySellerId(req, res, next){
+    await Order.find({},(err, order) => {
+        if (err) return res.status(500).json({error_message:err});
+
+        let ProductOrders = [];
+
+        order.forEach(e => {
+
+            let obj = {};
+            obj.addressee = e.addressee;
+            obj.address = e.address;
+            obj.phone_number = e.phone_number;
+            obj.order_states = e.order_states;
+            obj.products = []
+
+            let products = e.products;
+            products.forEach(product => {
+                let seller = product.seller
+                if(seller == req.params.seller_id){
+
+                    let product_obj = {}
+                    product_obj.product_id = product.product_id;
+                    product_obj.product_name = product.product_name;
+                    product_obj.quantity = product.quantity;
+                    obj.products.push(product_obj);
+
+                }
+
+            });
+
+            ProductOrders.push(obj);
+
+        });
+
+        return res.status(200).json(ProductOrders);
     });
 }

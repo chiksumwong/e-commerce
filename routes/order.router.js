@@ -5,4 +5,6 @@ module.exports = (router) => {
     router.route('/order/:id').put(orderController.updateOrder);
     // get order by user id
     router.route('/orders/:user_id').get(orderController.getOrderByUserId);
+    // get product order by seller id (user id)
+    router.route('/productOrders/:seller_id').get(orderController.getOrderBySellerId);
 }
