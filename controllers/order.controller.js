@@ -25,12 +25,15 @@ async function addOrder(req, res, next) {
 }
 
 async function updateOrder(req, res, next) {
-    await Order.findByIdAndUpdate(req.params.id, {$set:req.body}, (err, order) => {
+    let product_id = req.body._id;             // _id is products's _id
+    let order_states = req.body.order_states
+    await Order.findOneAndUpdate({'products._id':product_id}, {$set:{'products.$.order_states': order_states}}, (err, order) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(order);
     });
 }
 
+// for buyer
 async function getOrderByUserId(req, res, next){
     await Order.find({buyer:req.params.user_id},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
@@ -38,14 +41,13 @@ async function getOrderByUserId(req, res, next){
     });
 }
 
+// for seller
 async function getOrderBySellerId(req, res, next){
     await Order.find({},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
 
         let ProductOrders = [];
-
         order.forEach(e => {
-
             let obj = {};
             obj.order_id = e._id;
             obj.addressee = e.addressee;
@@ -64,15 +66,10 @@ async function getOrderBySellerId(req, res, next){
                     product_obj.quantity = product.quantity;
                     product_obj.order_states = product.order_states
                     obj.products.push(product_obj);
-
                 }
-
             });
-
             ProductOrders.push(obj);
-
         });
-
         return res.status(200).json(ProductOrders);
     });
 }
