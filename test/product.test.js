@@ -33,13 +33,13 @@ const updated_product_info = {
   }]
 };
 
-const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Y2FlOWRmMzFlMTBkZjI4OTQ0MDBiODMiLCJpYXQiOjE1NTQ5NDc1ODd9.vnjBjM3mu7oF6XqKt7nXlm31yyc5jR-W5cZv6ovhWoI';
+const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Y2FlY2QyYWFlODliNTBjNzg1ODNjOWQiLCJpYXQiOjE1NTQ5NjE4NjB9.VxKuMM-DfaWvkQJR5PKjsoaD4EzueqHWRlpI2h_x5mw';
 
 describe('Product', () => {
 
   /* Before Each Testing: Empty the Database */
   beforeEach((done) => {
-    Product.remove({}, (err) => {
+    Product.deleteMany({}, (err) => {
       if (err) return done(err);
       done();
     });
@@ -47,7 +47,7 @@ describe('Product', () => {
 
   /* After Each Testing: Empty the Database */
   afterEach((done) => {
-    Product.remove({}, (err) => {
+    Product.deleteMany({}, (err) => {
       if (err) return done(err);
       done();
     });

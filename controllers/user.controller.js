@@ -1,4 +1,4 @@
-const config = require('./../config');
+const config = require('./../config').get(process.env.NODE_ENV);
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -9,11 +9,13 @@ module.exports = {
     login,
     getById,
     deleteUser,
+    // carts
     addProductToCart,
     updateProductInCart,
-    updateProductListById,
-    updateOrderListById,
-    cleanCart
+    // products list
+    updateProductListByUserId,
+    // orders list
+    updateOrderListByUserId
 };
 
 async function register(req, res, next) {
@@ -67,15 +69,19 @@ async function addProductToCart(req, res, next) {
     const user_id = req.body.user_id;
     const product_info = {
         product_id: req.body.product_id,
+        product_name: req.body.product_name,
+        product_image: req.body.product_image,
+        selling_price: req.body.selling_price,
+        seller: req.body.seller,
         quantity: req.body.quantity,
         is_active: req.body.is_active
     }
     const user = await User.findById(user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
-    user.cart.push(product_info);
-   await user.save();
-   return res.status(200).json(user);
+    user.carts.push(product_info);
+    await user.save();
+    return res.status(200).json(user);
 }
 
 async function updateProductInCart(req, res, next) {
@@ -85,33 +91,29 @@ async function updateProductInCart(req, res, next) {
     return res.status(200).json(user);
 }
 
-async function updateProductListById(user_id, product) {
+// Products list
+async function updateProductListByUserId(user_id, product) {
     const user = await User.findById(user_id, err =>{
-        if (err) return res.status(500).json({error_message:err});
+        if (err) return "Error";
     });
     user.products.push(product);
     return await user.save();
 }
 
-async function updateOrderListById(seller_user_id, buyer_user_id, order) {
+// Orders list
+async function updateOrderListByUserId(seller_user_id, buyer_user_id, order) {
+    // update seller's orders list
     const seller = await User.findById(seller_user_id, err =>{
-        if (err) return res.status(500).json({error_message:err});
+        if (err) return "Error";
     });
     seller.orders.push(order);
     await seller.save();
-
+    // update buyer's orders list
     const buyer = await User.findById(buyer_user_id, err =>{
-        if (err) return res.status(500).json({error_message:err});
+        if (err) return "Error";
     });
     buyer.orders.push(order);
     await buyer.save();
 
-    return res.status(200).json({message:"done"});
-}
-
-async function cleanCart(user_id) {
-    const user = await User.findByIdAndUpdate(user_id, { $set:{cart:[]}}, err =>{
-        if (err) return res.status(500).json({error_message:err});
-    });
-    return user;
+    return "Done";
 }
