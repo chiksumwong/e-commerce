@@ -24,10 +24,10 @@ async function addOrder(req, res, next) {
     });
 }
 
+// update states of products in order
 async function updateOrder(req, res, next) {
-    let product_id = req.body._id;             // _id is products's _id
     let order_states = req.body.order_states
-    await Order.findOneAndUpdate({'products._id':product_id}, {$set:{'products.$.order_states': order_states}}, (err, order) => {
+    await Order.findOneAndUpdate({'products._id':req.params.product_id}, {$set:{'products.$.order_states': order_states}}, (err, order) => {
         if (err) return res.status(500).json({error_message:err});
         return res.status(200).json(order);
     });
