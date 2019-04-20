@@ -8,15 +8,15 @@ module.exports = {
 
 async function addOrder(req, res, next) {
     const order = new Order(req.body);
+
     await order.save((err, order) => {
         if (err) return res.status(500).json({error_message:err});
 
         // Find seller and buyer by id then update order list
-        let products = req.body.products
+        let products = order.products
         products.forEach(product => {
-            userController.updateOrderListById(product.seller, req.body.buyer, order);
+            userController.updateOrderListByUserId(product.seller, order.buyer, order);
         });
-
 
         return res.status(200).json(order);
     });

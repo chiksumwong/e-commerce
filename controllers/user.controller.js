@@ -102,12 +102,13 @@ async function updateProductListByUserId(user_id, product) {
 
 // Orders list
 async function updateOrderListByUserId(seller_user_id, buyer_user_id, order) {
+    // update seller's orders list
     const seller = await User.findById(seller_user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
     seller.orders.push(order);
     await seller.save();
-
+    // update buyer's orders list
     const buyer = await User.findById(buyer_user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
