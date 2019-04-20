@@ -9,10 +9,13 @@ module.exports = {
     login,
     getById,
     deleteUser,
+    // carts
     addProductToCart,
     updateProductInCart,
-    updateProductListById,
-    updateOrderListById
+    // products list
+    updateProductListByUserId,
+    // orders list
+    updateOrderListByUserId
 };
 
 async function register(req, res, next) {
@@ -77,8 +80,8 @@ async function addProductToCart(req, res, next) {
         if (err) return res.status(500).json({error_message:err});
     });
     user.carts.push(product_info);
-   await user.save();
-   return res.status(200).json(user);
+    await user.save();
+    return res.status(200).json(user);
 }
 
 async function updateProductInCart(req, res, next) {
@@ -88,7 +91,8 @@ async function updateProductInCart(req, res, next) {
     return res.status(200).json(user);
 }
 
-async function updateProductListById(user_id, product) {
+// Products list
+async function updateProductListByUserId(user_id, product) {
     const user = await User.findById(user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
@@ -96,7 +100,8 @@ async function updateProductListById(user_id, product) {
     return await user.save();
 }
 
-async function updateOrderListById(seller_user_id, buyer_user_id, order) {
+// Orders list
+async function updateOrderListByUserId(seller_user_id, buyer_user_id, order) {
     const seller = await User.findById(seller_user_id, err =>{
         if (err) return res.status(500).json({error_message:err});
     });
