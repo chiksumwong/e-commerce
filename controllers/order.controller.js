@@ -61,6 +61,7 @@ async function getOrderBySellerId(req, res, next){
                 if(seller == req.params.seller_id){
 
                     let product_obj = {}
+                    product_obj._id = product._id;
                     product_obj.product_id = product.product_id;
                     product_obj.product_name = product.product_name;
                     product_obj.quantity = product.quantity;
