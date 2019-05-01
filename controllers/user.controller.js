@@ -12,9 +12,9 @@ module.exports = {
     // carts
     addProductToCart,
     updateProductInCart,
-    // products list
+    // products list (function)
     updateProductListByUserId,
-    // orders list
+    // orders list (function)
     updateOrderListByUserId
 };
 
@@ -91,7 +91,13 @@ async function updateProductInCart(req, res, next) {
     return res.status(200).json(user);
 }
 
-// Products list
+/**
+ * Update seller's product list
+ *
+ * @param {*} user_id
+ * @param {*} product
+ * @returns
+ */
 async function updateProductListByUserId(user_id, product) {
     const user = await User.findById(user_id, err =>{
         if (err) return "Error";
@@ -100,7 +106,14 @@ async function updateProductListByUserId(user_id, product) {
     return await user.save();
 }
 
-// Orders list
+/**
+ * Update order list of both seller and buyer
+ *
+ * @param {*} seller_user_id
+ * @param {*} buyer_user_id
+ * @param {*} order
+ * @returns
+ */
 async function updateOrderListByUserId(seller_user_id, buyer_user_id, order) {
     // update seller's orders list
     const seller = await User.findById(seller_user_id, err =>{

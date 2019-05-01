@@ -33,7 +33,7 @@ async function updateOrder(req, res, next) {
     });
 }
 
-// for buyer
+// for buyer to get the order of product which buyer bought
 async function getOrderByUserId(req, res, next){
     await Order.find({buyer:req.params.user_id},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
@@ -41,7 +41,7 @@ async function getOrderByUserId(req, res, next){
     });
 }
 
-// for seller
+// for seller to get the order of product which someone bought
 async function getOrderBySellerId(req, res, next){
     await Order.find({},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
