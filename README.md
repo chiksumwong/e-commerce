@@ -50,8 +50,8 @@ Or
 | APIs                            | Method | Urls                                                 |
 | ------------------------------- | ------ | ---------------------------------------------------- |
 | Get products by seller id       | GET    | http://localhost:3000/api/v1/products/:user_id       |
-| Get orders by buyer id          | Get    | http://localhost:3000/api/v1/orders/:user_id         |
-| Get product orders by seller id | Get    | http://localhost:3000/api/v1/producstOrders/:user_id |
+| Get orders by buyer id          | GET    | http://localhost:3000/api/v1/orders/:user_id         |
+| Get product orders by seller id | GET    | http://localhost:3000/api/v1/producstOrders/:user_id |
 
 
 ## Database Design (NOSQL Database Version)
