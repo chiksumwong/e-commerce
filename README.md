@@ -1,4 +1,4 @@
-# e-commerce-platform-backend
+# E-Commerce Platform Backend
 [![Build Status](https://travis-ci.com/chiksumwong/e-commerce-platform-backend.svg?token=zvXMXvZ8HnB2PtvDsBvS&branch=master)](https://travis-ci.com/chiksumwong/e-commerce-platform-backend)
 
 ## Run
