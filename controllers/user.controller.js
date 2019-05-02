@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const User = require('./../models/user.model');
+const Product = require('./../models/product.model');
 
 module.exports = {
     register,
@@ -56,12 +57,12 @@ async function getById(req, res, next) {
 }
 
 async function deleteUser(req, res, next) {
-    await User.findByIdAndRemove(req.params.id, err => {
+    await Product.findOneAndDelete({seller: req.params.id}, err=> {
         if (err) return res.status(500).json({error_message:err});
-        const response = {
-            message: "Successfully deleted",
-        };
-        return res.status(200).json(response);
+            User.findByIdAndRemove(req.params.id, err => {
+                if (err) return res.status(500).json({error_message:err});
+                return res.status(200).json({message: "delete account success"});
+        });
     });
 }
 

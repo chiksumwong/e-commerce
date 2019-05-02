@@ -5,7 +5,7 @@ module.exports = (router) => {
     router.route('/login').post(userController.login);
     router.route('/user/:id').get(userController.getById);
     router.route('/user/:id').delete(userController.deleteUser);
-    // carts
+    // cart
     router.route('/cart').post(userController.addProductToCart);
     router.route('/cart/:id').put(userController.updateProductInCart);
 }

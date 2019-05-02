@@ -46,7 +46,7 @@ async function getOrderBySellerId(req, res, next){
     await Order.find({},(err, order) => {
         if (err) return res.status(500).json({error_message:err});
 
-        let ProductOrders = [];
+        let productsOrders = [];
         order.forEach(e => {
             let obj = {};
             obj.order_id = e._id;
@@ -69,8 +69,8 @@ async function getOrderBySellerId(req, res, next){
                     obj.products.push(product_obj);
                 }
             });
-            ProductOrders.push(obj);
+            productsOrders.push(obj);
         });
-        return res.status(200).json(ProductOrders);
+        return res.status(200).json(productsOrders);
     });
 }
