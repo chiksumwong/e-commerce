@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const User = require('./../models/user.model');
+const Product = require('./../models/product.model');
 
 module.exports = {
     register,
@@ -12,9 +13,9 @@ module.exports = {
     // carts
     addProductToCart,
     updateProductInCart,
-    // products list
+    // products list (function)
     updateProductListByUserId,
-    // orders list
+    // orders list (function)
     updateOrderListByUserId
 };
 
@@ -56,12 +57,12 @@ async function getById(req, res, next) {
 }
 
 async function deleteUser(req, res, next) {
-    await User.findByIdAndRemove(req.params.id, err => {
+    await Product.findOneAndDelete({seller: req.params.id}, err=> {
         if (err) return res.status(500).json({error_message:err});
-        const response = {
-            message: "Successfully deleted",
-        };
-        return res.status(200).json(response);
+            User.findByIdAndRemove(req.params.id, err => {
+                if (err) return res.status(500).json({error_message:err});
+                return res.status(200).json({message: "delete account success"});
+        });
     });
 }
 
@@ -91,7 +92,13 @@ async function updateProductInCart(req, res, next) {
     return res.status(200).json(user);
 }
 
-// Products list
+/**
+ * Update seller's product list
+ *
+ * @param {*} user_id
+ * @param {*} product
+ * @returns
+ */
 async function updateProductListByUserId(user_id, product) {
     const user = await User.findById(user_id, err =>{
         if (err) return "Error";
@@ -100,7 +107,14 @@ async function updateProductListByUserId(user_id, product) {
     return await user.save();
 }
 
-// Orders list
+/**
+ * Update order list of both seller and buyer
+ *
+ * @param {*} seller_user_id
+ * @param {*} buyer_user_id
+ * @param {*} order
+ * @returns
+ */
 async function updateOrderListByUserId(seller_user_id, buyer_user_id, order) {
     // update seller's orders list
     const seller = await User.findById(seller_user_id, err =>{
