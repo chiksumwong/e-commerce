@@ -1,5 +1,5 @@
 # e-commerce-platform-backend
-[![Build Status](https://travis-ci.com/chiksumwong/e-commerce-backend.svg?token=zvXMXvZ8HnB2PtvDsBvS&branch=master)](https://travis-ci.com/chiksumwong/e-commerce-backend)
+[![Build Status](https://travis-ci.com/chiksumwong/e-commerce-platform-backend.svg?token=zvXMXvZ8HnB2PtvDsBvS&branch=master)](https://travis-ci.com/chiksumwong/e-commerce-platform-backend)
 
 ## Run
 ```sh
